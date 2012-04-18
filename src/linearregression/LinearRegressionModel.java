@@ -2,6 +2,7 @@ package linearregression;
 
 import java.io.*;
 import java.util.*;
+import common.*;
 
 /**
  * Class to build linear regression model with one variable
@@ -94,6 +95,22 @@ public class LinearRegressionModel
     }
     System.out.println("Model Parameters :");
     System.out.println(theta[0] + " " + theta[1]);
+    
+    try
+    {
+      double predictedResults[] = new double[x.length];
+      
+      for(int i = 0; i < predictedResults.length; i++)
+        predictedResults[i] = predict(x[i]);
+        
+	  Plot p = new Plot("ProfitPrediction.png", "Profit Prediction", "Population", "Profit", "Actual Data", "Predicted Data", x, y, predictedResults);
+	  p.setPlotStyle(PlotStyle.POINTS, PlotStyle.LINE);
+	  p.plotGraph();
+	}
+    catch (Exception e)
+    {
+	  e.printStackTrace();
+	}
   }
   
   /**
