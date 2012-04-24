@@ -1,8 +1,6 @@
 package linearregression;
 
-import java.io.*;
 import java.util.*;
-import common.*;
 
 /**
  * Class to build linear regression model with one variable
@@ -20,37 +18,11 @@ public class LinearRegressionModel
   
   private double costHistory[] = null; // History of cost values for gradient descent
   
-  public LinearRegressionModel(String inputFile) throws IOException
+  public LinearRegressionModel(double _x[], double _y[], int _numSamples)
   {
-    String line;
-    String []tokens = null;
-    
-    ArrayList<Double> inputLabel = new ArrayList<Double>();
-    ArrayList<Double> outputLabel = new ArrayList<Double>();
-    
-    BufferedReader reader = new BufferedReader(new FileReader(new File(inputFile)));
-    
-    while((line = reader.readLine()) != null)
-    {
-      tokens = line.split(",");
-      
-      if(tokens.length != 2)
-        throw new IllegalArgumentException();
-      inputLabel.add(Double.valueOf(tokens[0]));
-      outputLabel.add(Double.valueOf(tokens[1]));
-    }
-    reader.close();
-    
-    numSamples = inputLabel.size();
-    
-    x = new double[numSamples];
-    y = new double[numSamples];
-    
-    for(int i = 0; i < numSamples; i++)
-    {
-      x[i] = inputLabel.get(i).doubleValue();
-      y[i] = outputLabel.get(i).doubleValue();
-    }
+    this.numSamples = _numSamples;
+    this.x = _x;
+    this.y = _y;
     
     theta = new double[2];
     theta[0] = theta[1] = 0;
@@ -102,10 +74,6 @@ public class LinearRegressionModel
       
       for(int i = 0; i < predictedResults.length; i++)
         predictedResults[i] = predict(x[i]);
-        
-	  Plot p = new Plot("ProfitPrediction.png", "Profit Prediction", "Population", "Profit", "Actual Data", "Predicted Data", x, y, predictedResults);
-	  p.setPlotStyle(PlotStyle.POINTS, PlotStyle.LINE);
-	  p.plotGraph();
 	}
     catch (Exception e)
     {
@@ -118,7 +86,7 @@ public class LinearRegressionModel
    * @param input
    * @return
    */
-  private double predict(double input)
+  public double predict(double input)
   {
     double result = theta[0] + theta[1] * input;
     return result;
@@ -128,7 +96,7 @@ public class LinearRegressionModel
    * Method to calculate the cost of the prediction for given model parameters theta
    * @return
    */
-  public double calculateCost()
+  private double calculateCost()
   {
     double cost = 0;
     
@@ -142,29 +110,5 @@ public class LinearRegressionModel
     }
     cost = cost / (2.0 * numSamples);
     return cost;
-  }
-  
-  public static void main(String args[])
-  {
-    try
-    {
-      System.out.println("Given data of population of a town in thousands and Profit in thousands, build linear regression model");
-      LinearRegressionModel model = new LinearRegressionModel(args[0]);
-      model.setLearningRate(0.01);
-      model.setNumIterations(1500);
-      model.trainModel();
-      
-      double population = 3.5;
-      System.out.println("Profit for population for " + (population * 10000) + " = " + model.predict(population) * 10000);
-      
-      population = 7;
-      System.out.println("Profit for population for " + (population * 10000) + " = " + model.predict(population) * 10000);
-      
-    }
-    catch(Exception e)
-    {
-      System.err.println(e.getMessage());
-      e.printStackTrace();
-    }
   }
 }

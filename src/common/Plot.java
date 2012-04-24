@@ -97,7 +97,7 @@ public class Plot
     tempDataFile =  new File(outputFile + ".dat");
     dataFile = tempDataFile.getName();
 
-    System.err.println("Data file name : " + dataFile);
+  //  System.err.println("Data file name : " + dataFile);
     tempConfFile = new File(outputFile + ".tmp");
 
     configFile = tempConfFile.getName();
@@ -168,7 +168,7 @@ public class Plot
   private void writeGNUPlotDataFile() throws Exception
   {
     BufferedWriter writer = new BufferedWriter(new FileWriter(tempDataFile));
-    System.err.println("Writing data");
+ //   System.err.println("Writing data");
     for(int i = 0; i < xData.length; i++)
     {
       writer.write(xData[i] + "\t" + yData[i]);
@@ -192,11 +192,11 @@ public class Plot
 
     Process p = Runtime.getRuntime().exec(gnuplotPath + " " + configFile);
     p.waitFor();
-    System.err.println("Return Value of GNUPlot Process : " + p.exitValue());
+    System.out.println("Return Value of GNUPlot Process : " + p.exitValue());
     // Delete the temporary data and configuration files
-    System.err.println("Deleting temp GNUPlot files");
+ //   System.err.println("Deleting temp GNUPlot files");
     tempDataFile.delete();
     tempConfFile.delete();
-    System.err.println("Deleted temp files");
+ //   System.err.println("Deleted temp files");
   }
 }
