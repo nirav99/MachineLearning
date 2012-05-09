@@ -12,60 +12,54 @@ public class HousePricePredictionProblem
   {
     String line;
     
-    System.out.println("Given data of population of a town in thousands and Profit in thousands, build linear regression model");
+    System.out.println("Given data of house square feet, number of rooms and price of house, build linear regression model");
     String inputFile = args[0];
+    System.out.println("Input file = " + inputFile);
     try
     {
       String []tokens = null;
         
-      ArrayList<Double> inputLabel = new ArrayList<Double>();
+      ArrayList<Double> inputLabel1 = new ArrayList<Double>();
+      ArrayList<Double> inputLabel2 = new ArrayList<Double>();
       ArrayList<Double> outputLabel = new ArrayList<Double>();
-      double x[] = null;
+      double x[][] = null;
       double y[] = null;
-      double predictedY[] = null;
       
       int numSamples;
       BufferedReader reader = new BufferedReader(new FileReader(new File(inputFile)));
-        
+     
+      
       while((line = reader.readLine()) != null)
       {
         tokens = line.split(",");
           
-        if(tokens.length != 2)
+        if(tokens.length != 3)
           throw new IllegalArgumentException();
-        inputLabel.add(Double.valueOf(tokens[0]));
-        outputLabel.add(Double.valueOf(tokens[1]));
+        inputLabel1.add(Double.valueOf(tokens[0]));
+        inputLabel2.add(Double.valueOf(tokens[1]));
+        outputLabel.add(Double.valueOf(tokens[2]));
       }
       reader.close();
         
-      numSamples = inputLabel.size();
-      x = new double[numSamples];
+      numSamples = inputLabel1.size();
+      x = new double[numSamples][2];
       y = new double[numSamples];
-      predictedY = new double[numSamples];
       
       for(int i = 0; i < numSamples; i++)
       {
-        x[i] = inputLabel.get(i);
+        x[i][0] = inputLabel1.get(i);
+        x[i][1] = inputLabel2.get(i);
         y[i] = outputLabel.get(i);
       }
       
-      LinearRegressionModel model = new LinearRegressionModel(x, y, numSamples);
+      LinearRegressionModel model = new LinearRegressionModel(x, y, 2, numSamples);
       model.setLearningRate(0.01);
-      model.setNumIterations(1500);
+      model.setNumIterations(5000);
       model.trainModel();
       
-      double population = 3.5;
-      System.out.println("Profit for population for " + (population * 10000) + " = " + model.predict(population) * 10000);
-      
-      population = 7;
-      System.out.println("Profit for population for " + (population * 10000) + " = " + model.predict(population) * 10000);
-      
-      for(int i = 0; i < numSamples; i++)
-        predictedY[i] = model.predict(x[i]);
-
-      Plot p = new Plot("ProfitPrediction.png", "Profit Prediction", "Population", "Profit", "Actual Data", "Predicted Data", x, y, predictedY);
-	  Plot.setPlotStyle(PlotStyle.POINTS, PlotStyle.LINE);
-	  p.plotGraph();
+      double houseData[] = new double[]{1650.0, 3.0};
+      houseData = new double[]{852.0, 2.0};
+      System.out.println("House Sq. feet : " + houseData[0] + " Num Rooms : " + houseData[1] + " Predicted Price : "+ model.predict(houseData));
     }
     catch(Exception e)
     {
