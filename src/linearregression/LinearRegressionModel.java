@@ -2,6 +2,11 @@ package linearregression;
 
 import common.*;
 
+/**
+ * Class to build, train and predict from a linear regression model
+ * @author nirav99
+ *
+ */
 public class LinearRegressionModel
 {
   private double x[][];            // Represents the input training data  
@@ -19,6 +24,12 @@ public class LinearRegressionModel
   private double minList[] = null;
   private double avgList[] = null;
   
+  /**
+   * Class constructor - for single dimensional input
+   * @param _x input array
+   * @param _y output array
+   * @param numSamples total size of training data
+   */
   public LinearRegressionModel(double _x[], double _y[], int numSamples)
   {
     double input[][] = new double[numSamples][1];
@@ -28,11 +39,25 @@ public class LinearRegressionModel
     LinearRegressionHelper(input, _y, 1, numSamples);
   }
   
+  /**
+   * Class constructor - for multi-dimensional input
+   * @param _x input array
+   * @param _y ouput array
+   * @param numDimensions number of dimensions of input
+   * @param numSamples total size of training data
+   */
   public LinearRegressionModel(double _x[][], double _y[], int numDimensions, int numSamples)
   {
     LinearRegressionHelper(_x, _y, numDimensions, numSamples);
   }
   
+  /**
+   * Helper method for the constructors
+   * @param _x
+   * @param _y
+   * @param numDimensions
+   * @param numSamples
+   */
   private void LinearRegressionHelper(double _x[][], double _y[], int numDimensions, int numSamples)
   {
 	this.numDimensions = numDimensions;
@@ -57,16 +82,27 @@ public class LinearRegressionModel
 	scaleInput();
   }
   
+  /**
+   * Set learning rate of gradient descent algorithm
+   * @param lRate
+   */
   public void setLearningRate(double lRate)
   {
     this.learningRate = lRate;
   }
   
+  /**
+   * Set number of iterations for gradient descent algorithm
+   * @param nIter
+   */
   public void setNumIterations(int nIter)
   {
     this.numIter = nIter;
   }
   
+  /**
+   * Train the model using the traning set.
+   */
   public void trainModel()
   {
     costHistory = new double[numIter];
@@ -109,6 +145,11 @@ public class LinearRegressionModel
     }
   }
   
+  /**
+   * Predict the outcome for a given data sample
+   * @param _input
+   * @return
+   */
   public double predict(double _input[])
   {
     double input[] = new double[theta.length];
@@ -125,6 +166,9 @@ public class LinearRegressionModel
     return predictionHelper(input);
   }
   
+  /**
+   * Perform feature scaling where there are more than one dimensions in the input data.
+   */
   private void scaleInput()
   {
     if(numDimensions <= 1)
@@ -158,6 +202,11 @@ public class LinearRegressionModel
 	}
   }
   
+  /**
+   * Helper method to compute theta transform * input (i.e. calculate the result for a given input and given model parameters)
+   * @param input
+   * @return
+   */
   private double predictionHelper(double input[])
   {
     double result = 0;
@@ -169,6 +218,10 @@ public class LinearRegressionModel
     return result;
   }
   
+  /**
+   * Method to calculate the cost for given model parameters and traning data.
+   * @return
+   */
   private double calculateCost()
   {
     double cost = 0;
