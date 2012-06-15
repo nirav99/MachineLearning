@@ -1,5 +1,7 @@
 package linearregression;
 
+import java.util.Arrays;
+
 import common.*;
 
 /**
@@ -108,8 +110,10 @@ public class LinearRegressionModel
     costHistory = new double[numIter];
     
     double sum[] = null;
+    int k = 0;
     
-    for(int k = 0; k < numIter; k++)
+  //  for(int k = 0; k < numIter; k++)
+    while(true)
     {
       sum = new double[theta.length];
       
@@ -127,10 +131,19 @@ public class LinearRegressionModel
       }
       sum = null;
       
+      if(k == costHistory.length)
+      {
+        costHistory = Arrays.copyOf(costHistory, k + 1000);
+      }
       costHistory[k] = calculateCost();
+      
+      if(k > 0 && (costHistory[k -1] - costHistory[k] < 0.0001))
+    	  break;
+      k++;
     }
-    double iterationValues[] = new double[costHistory.length];
-    for(int i = 0; i < iterationValues.length; i++)
+    System.out.println("Num. Steps = " + k);
+    double iterationValues[] = new double[k];
+    for(int i = 0; i < k; i++)
       iterationValues[i] = i + 1;
     
     try
@@ -158,7 +171,7 @@ public class LinearRegressionModel
     for(int j = 0; j < _input.length; j++)
       input[j + 1] = _input[j];
     
-    if(input.length > 2)
+    if(input.length >= 1)
     {
       for(int j = 1; j < theta.length; j++)
         input[j] = (input[j] - avgList[j -1]) / (1.0 * (maxList[j -1] - minList[j -1]));
@@ -171,8 +184,8 @@ public class LinearRegressionModel
    */
   private void scaleInput()
   {
-    if(numDimensions <= 1)
-      return;
+ //   if(numDimensions <= 1)
+ //     return;
     
     for(int j = 1; j <= numDimensions; j++)
 	{
@@ -236,3 +249,4 @@ public class LinearRegressionModel
     return cost;
   }
 }
+

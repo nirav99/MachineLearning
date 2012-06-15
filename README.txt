@@ -4,9 +4,11 @@ The package linearregression contains the linear regression model where the inpu
 
 The package problems contains the sample problems to test various models.
 
-1) House Price Prediction Problem: is a linear regression problems. The input data is a list of housing data (area of house in sq. feet, number of rooms). This problem predicts the price of a house from the training data.
+1) Gold Price Prediction Problem: Given an input data of historical trend of gold price for 1 oz., predict the price for gold.
 
-2) Profit Prediction Problem: is also a linear regression problem. The input data is the population of the city with profit values of setting up business in that city. This problem predicts the profit of setting a business in a city based on the training data.
+2) House Price Prediction Problem: is a linear regression problems. The input data is a list of housing data (area of house in sq. feet, number of rooms). This problem predicts the price of a house from the training data.
+
+3) Profit Prediction Problem: is also a linear regression problem. The input data is the population of the city with profit values of setting up business in that city. This problem predicts the profit of setting a business in a city based on the training data.
 
 How to build and run these problems:
 
@@ -16,9 +18,14 @@ How to build and run these problems:
 
 3) To build the Profit Prediction Problem, run the bash script buildProfitPredictorJar.sh.
 
-4) To run these problems, use the commands
+4) To build the Gold Price Prediction Problem, run the bash script buildGoldPricePredictorJar.sh.
+
+5) To run these problems, use the commands
   java -jar HousePricePredictor.jar ./data/HousePricePredictionData.txt
 
   java -jar ProfitPredictor.jar ./data/ProfitPredictionData.txt
 
+  java -jar GoldPricePredictor.jar ./data/GoldPriceDataLast4Years.csv
+
 These problems train themselves on the training data while running gradient descent algorithm and predict the outcome. These problems also plot the cost in gradient descent algorithm with each iteration (step) of the algorithm.
+Moreover, when the input has only one feature, the trend of actual data vs predicted data is also built.
