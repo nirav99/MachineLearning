@@ -4,7 +4,7 @@ The package linearregression contains the linear regression model where the inpu
 
 The package problems contains the sample problems to test various models.
 
-1) Gold Price Prediction Problem: Given an input data of historical trend of gold price for 1 oz., predict the price for gold.
+1) Gold Price Prediction Problem: Given an input data of historical trend of gold price for 1 oz., predict the price for gold for a given month.
 
 2) House Price Prediction Problem: is a linear regression problems. The input data is a list of housing data (area of house in sq. feet, number of rooms). This problem predicts the price of a house from the training data.
 
