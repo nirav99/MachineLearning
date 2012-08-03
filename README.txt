@@ -29,3 +29,7 @@ How to build and run these problems:
 
 These problems train themselves on the training data while running gradient descent algorithm and predict the outcome. These problems also plot the cost in gradient descent algorithm with each iteration (step) of the algorithm.
 Moreover, when the input has only one feature, the trend of actual data vs predicted data is also built.
+
+The directory BodyCompositionClassifier obtains the height, weight data and classifies different body types in under-weight, normal, obese and over-weight. Classification of the training data is determined by calculating the body-mass index (BMI).
+It uses a neural network with 2 input nodes, one hidden layer with 4 nodes and an output layer of 4 nodes. This project trains the neural network data using forward and back propagation algorithm and then applies the learned parameters against the training data and computes the accuracy of the training set. 
+This is a demonstration of how to represent and train the neural networks and determine the outcome using neural networks.
